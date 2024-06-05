@@ -9,11 +9,11 @@ public class SecureElemMigrationContentRollback {
 
     private final String keyText;
 
-    private final String TEMPLATE = """
+    private static final String TEMPLATE = """
                 <delete tableName="rights_template_profile_secur_elem">
                             <where>
                                 secur_elem_id IN(
-                                select id FROM secur_elem WHERE key IN (
+                                SELECT id FROM secur_elem WHERE key IN (
                                 %s
                                 ))
                             </where>
@@ -22,6 +22,7 @@ public class SecureElemMigrationContentRollback {
                         <delete tableName="secur_elem_perm">
                             <where>
                                 secur_elem_id IN (
+                                 SELECT id FROM secur_elem WHERE key IN (
                                 %s
                                 ))
                             </where>
@@ -29,7 +30,8 @@ public class SecureElemMigrationContentRollback {
                         
                         <delete tableName="secur_elem_ko_perm">
                             <where>
-                                secur_elem_id = (SELECT id FROM secur_elem WHERE key IN (
+                                secur_elem_id IN (
+                                SELECT id FROM secur_elem WHERE key IN (
                                 %s
                                 ))
                             </where>

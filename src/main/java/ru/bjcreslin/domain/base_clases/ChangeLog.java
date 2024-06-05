@@ -15,40 +15,43 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChangeLog {
 
-    private static final String KEY_TEXT = "collateral_conclusion";
+    private final String keyText;
 
-    private static final String AUTHOR = "KreslinVYu";
+    private final String author;
 
-    private static final String STORY_NUMBER = "DOSIE-11982 (12083)";
+    private final String storyNumber;
 
-    private static final String TAB_NAME = "Заключения САР по залоговым объектам";
+    private final String tabName;
 
     private final Permission[] permissions;
 
-    public ChangeLog(Permission[] permissions) {
+    public ChangeLog(String keyText, String author, String storyNumber, String tabName, Permission[] permissions) {
+        this.keyText = keyText;
+        this.author = author;
+        this.storyNumber = storyNumber;
+        this.tabName = tabName;
         this.permissions = permissions;
     }
 
     public void create() {
-        SecureElemPermissionId permissionId = new SecureElemPermissionId(KEY_TEXT);
+        SecureElemPermissionId permissionId = new SecureElemPermissionId(keyText);
         String fileContent = getFileContent(permissions, permissionId);
         saveFile(permissionId, fileContent);
     }
 
-    private static String getFileContent(Permission[] permissions, SecureElemPermissionId permissionId) {
+    private String getFileContent(Permission[] permissions, SecureElemPermissionId permissionId) {
 
         return String.format(
                 getTempleFileContent(),
                 permissionId.toString(),
-                AUTHOR, STORY_NUMBER, TAB_NAME,
+                author, storyNumber, tabName,
                 new SecureElemMigrationContent(permissions),
                 new SecureElemMigrationContentRollback(permissions),
-                new ProfileSecureElemPermissionId(KEY_TEXT),
-                AUTHOR, STORY_NUMBER, TAB_NAME,
+                new ProfileSecureElemPermissionId(keyText),
+                author, storyNumber, tabName,
                 new ProfileSecureElemMigrationContent(permissions),
                 new ProfileSecureElemMigrationContentRollback(permissions)
         );
@@ -72,10 +75,8 @@ public class ChangeLog {
         try {
             Path path = Paths.get(resource.toURI());
             List<String> fileLines = Files.readAllLines(path);
-            return fileLines.stream().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+            return String.join("\n", fileLines);
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
 

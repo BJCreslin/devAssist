@@ -7,6 +7,14 @@ import ru.bjcreslin.enums.Profile;
 
 public class Solution {
 
+    private static final String KEY_TEXT = "collateral_conclusion";
+
+    private static final String AUTHOR = "KreslinVYu";
+
+    private static final String STORY_NUMBER = "DOSIE-11982 (12083)";
+
+    private static final String TAB_NAME = "Заключения САР по залоговым объектам";
+
     public static void main(String[] args) {
         Profile[] profiles = new Profile[]{
                 Profile.AUDITOR,
@@ -59,7 +67,7 @@ public class Solution {
                 )
         };
 
-        ChangeLog changeLog = new ChangeLog(permissions);
+        ChangeLog changeLog = new ChangeLog(KEY_TEXT, AUTHOR, STORY_NUMBER, TAB_NAME, permissions);
         changeLog.create();
         System.out.println("Change log has been created.");
     }
