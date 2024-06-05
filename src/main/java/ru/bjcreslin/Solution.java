@@ -54,7 +54,7 @@ public class Solution {
                         profiles,
                         null
                 ),
-
+                //Ко- зависимый пермишн
                 new Permission(
                         "sar-conclusions#collateral-conclusions-tab#view",
                         PermissionType.ACTION,
