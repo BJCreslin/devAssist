@@ -17,7 +17,7 @@ public class ProfileSecureElemMigrationContentRollback {
                                 WHERE profile_name IN (%s) )
                                 AND secur_elem_id IN (
                                 SELECT id FROM secur_elem WHERE key IN (
-                                %s) )
+                                '%s') )
                             </where>
                         </delete>
             """;
