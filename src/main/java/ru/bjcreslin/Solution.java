@@ -19,7 +19,7 @@ public class Solution {
         Profile[] profiles = new Profile[]{
                 Profile.AUDITOR,
                 Profile.BUSINESS_ANALYST_GIBR,
-                Profile.BUSINESS_ADMIN_CO,
+                Profile.BUSINESS_ADMINISTRATOR,
                 Profile.CURATOR_STBN,
                 Profile.CURATOR_GIBR,
                 Profile.CURATOR_DFS,
